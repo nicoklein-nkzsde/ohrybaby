@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OHRYBABY — Official</title>
+<meta name="description" content="OHRYBABY — offizielle Seite. Musik, Videos und alle Links auf einen Blick." />
+
+<!-- Open Graph / Social preview -->
+<meta property="og:title" content="OHRYBABY" />
+<meta property="og:description" content="Offizielle Seite — Musik, Videos & Links." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://ohrybaby.com" />
+<!-- <meta property="og:image" content="og-image.jpg" /> -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700&family=Metamorphous&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg-soft: #121212;
+    --card: #161616;
+    --line: #262626;
+    --text: #f2f2f2;
+    --muted: #8a8a8a;
+    --accent: #ffffff;
+    --radius: 16px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  img { max-width: 100%; display: block; }
+
+  .wrap { width: 100%; max-width: 640px; margin: 0 auto; padding: 0 20px; }
+
+  /* ---------- HERO ---------- */
+  .hero {
+    position: relative;
+    min-height: 74vh;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 4vw, 44px);
+    text-align: center;
+    padding: 80px 20px 48px;
+    overflow: hidden;
+  }
+
+  /* Placeholder gradient backdrop — swap for a hero photo later */
+  .hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(1000px 560px at 50% -5%, rgba(130,130,160,0.16) 0%, transparent 60%);
+    z-index: 0;
+    pointer-events: none;
+  }
+  .hero > * { position: relative; z-index: 1; }
+
+  .hero-video {
+    position: relative;
+    z-index: 1;
+    height: min(46vh, 420px);
+    aspect-ratio: 9 / 16;
+    margin-bottom: 0;
+    flex: 0 0 auto;
+    /* MP4 has a solid black background → screen blend drops the black, only the glowing logo remains */
+    mix-blend-mode: screen;
+  }
+  .hero-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+  }
+
+  /* Text sits beside the logo — no panel, the glass look lives on the letters */
+  .hero-text {
+    position: relative;
+    z-index: 3;
+    flex: 0 1 auto;
+  }
+
+  .hero h1 {
+    font-family: 'Metamorphous', 'Anton', serif;
+    font-size: clamp(23px, 6.4vw, 58px);
+    line-height: 1;
+    letter-spacing: 0.03em;
+    margin: 0;
+    color: #fff;
+  }
+
+  .hero .tagline {
+    color: rgba(255,255,255,0.52);
+    font-size: 15px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    margin-top: 16px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.18);
+  }
+
+  /* Landscape phones: video and title side by side so it fits the short height */
+  @media (orientation: landscape) and (max-height: 600px) {
+    .hero {
+      flex-direction: row;
+      min-height: 100vh;
+      gap: clamp(20px, 5vw, 48px);
+      padding: 40px 24px;
+    }
+    .hero-video { height: min(82vh, 380px); margin-bottom: 0; flex: 0 0 auto; }
+    .hero-text {
+      position: static;
+      transform: none;
+      text-align: center;
+      flex: 0 1 auto;
+    }
+    .hero h1 { font-size: clamp(40px, 11vh, 84px); }
+    .hero .tagline { margin-top: 12px; }
+  }
+
+  /* Small phones: shrink logo + name so they still sit side by side */
+  @media (max-width: 480px) {
+    .hero { gap: 8px; padding: 70px 14px 40px; }
+    .hero-video { height: min(34vh, 320px); }
+    .hero-text { padding: 13px 16px 15px; border-radius: 20px; }
+    .hero .tagline { font-size: 11px; letter-spacing: 0.12em; }
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section { padding: 44px 0; }
+
+  .section-title {
+    font-size: 13px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 22px;
+    text-align: center;
+  }
+
+  /* ---------- LINK BUTTONS ---------- */
+  .links { display: flex; flex-direction: column; gap: 12px; }
+
+  .link {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 16px 20px;
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  .link:hover {
+    transform: translateY(-2px);
+    border-color: #444;
+    background: #1b1b1b;
+  }
+  .link .ic { width: 24px; height: 24px; flex: 0 0 24px; }
+  .link .ic svg { width: 100%; height: 100%; fill: currentColor; }
+  .link .arrow { margin-left: auto; color: var(--muted); font-size: 18px; }
+
+  /* ---------- NEW RELEASE / SHORTS ---------- */
+  .release-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #0a0a0a;
+    background: #fff;
+    padding: 6px 12px;
+    border-radius: 999px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .release-tag .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #e11; animation: pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: .3; } }
+
+  .release-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(30px, 9vw, 44px);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 22px;
+    line-height: 1;
+  }
+
+  .release-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+  .release-cta a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 999px;
+    background: #fff;
+    color: #0a0a0a;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 14px;
+    transition: opacity 0.15s ease, transform 0.15s ease;
+  }
+  .release-cta a.alt { background: transparent; color: #fff; border: 1px solid var(--line); }
+  .release-cta a:hover { opacity: .85; transform: translateY(-2px); }
+
+  .shorts { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .short {
+    position: relative;
+    aspect-ratio: 9 / 16;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+  .short iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  /* ---------- VIDEOS ---------- */
+  .videos { display: flex; flex-direction: column; gap: 20px; }
+  .video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--bg-soft);
+  }
+  .video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+  .video-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--muted);
+    font-size: 14px;
+    gap: 8px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  /* ---------- ABOUT / BIO ---------- */
+  .bio p { color: #cfcfcf; font-size: 16px; margin-bottom: 16px; }
+  .bio p:last-child { margin-bottom: 0; }
+  .bio strong { color: var(--text); font-weight: 600; }
+
+  .facts {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .facts li {
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 16px;
+  }
+  .facts .num {
+    font-family: 'Anton', sans-serif;
+    font-size: 26px;
+    letter-spacing: 0.02em;
+    display: block;
+    margin-bottom: 2px;
+  }
+  .facts .lbl { color: var(--muted); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ---------- BIO: LANGUAGE TOGGLE + FLY-IN ---------- */
+  .bio .section-title { margin-bottom: 0; text-align: left; }
+  .bio-head {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; margin-bottom: 26px;
+  }
+  .lang-toggle {
+    display: inline-flex; align-items: center;
+    background: var(--card); border: 1px solid var(--line);
+    border-radius: 999px; padding: 3px;
+  }
+  .lang-btn {
+    border: 0; background: transparent; color: var(--muted);
+    font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: 0.12em;
+    padding: 7px 16px; border-radius: 999px; cursor: pointer;
+    transition: color 0.2s ease, background 0.2s ease;
+  }
+  .lang-btn:hover { color: var(--text); }
+  .lang-btn.active { background: #fff; color: #0a0a0a; }
+
+  .bio-stage { position: relative; }
+  .bio-lang > p { color: #cfcfcf; font-size: 16px; margin-bottom: 16px; }
+  .bio-lang > p:last-child { margin-bottom: 0; }
+  .bio-lang .lead { color: var(--text); font-size: 19px; font-weight: 600; line-height: 1.5; }
+  .bio-lang .outro { color: var(--text); font-weight: 600; }
+  .bio-lang strong { color: #fff; font-weight: 700; }
+
+  /* Ghost cross-fade between languages: blocks overlap 1:1, old dissolves, new appears */
+  .bio-lang { transition: opacity 0.55s ease, filter 0.55s ease, transform 0.55s ease; }
+  @media (prefers-reduced-motion: no-preference) {
+    .bio-lang.enter { opacity: 0; filter: blur(12px); transform: translateY(10px); }
+    .bio-lang.ghost {
+      position: absolute; top: 0; left: 0; right: 0;
+      opacity: 0; filter: blur(12px); transform: translateY(-8px) scale(1.008);
+      pointer-events: none;
+    }
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer {
+    text-align: center;
+    padding: 48px 20px 60px;
+    border-top: 1px solid var(--line);
+    margin-top: 20px;
+  }
+  footer .name {
+    font-family: 'Metamorphous', 'Anton', serif;
+    font-size: 38px;
+    letter-spacing: 0.06em;
+    margin-bottom: 12px;
+    color: #fff;
+    filter: drop-shadow(0 0 3px rgba(255,255,255,0.6)) drop-shadow(0 0 22px rgba(255,255,255,0.28));
+  }
+  footer .contact { color: var(--muted); font-size: 14px; }
+  footer .contact a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--line); }
+  footer .copy { color: #555; font-size: 12px; margin-top: 22px; letter-spacing: 0.05em; }
+
+  .impressum {
+    max-width: 480px;
+    margin: 26px auto 0;
+    text-align: left;
+    border-top: 1px solid var(--line);
+    padding-top: 20px;
+  }
+  .impressum summary {
+    list-style: none;
+    cursor: pointer;
+    color: var(--muted);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-align: center;
+    user-select: none;
+  }
+  .impressum summary::-webkit-details-marker { display: none; }
+  .impressum summary:hover { color: var(--text); }
+  .impressum .imp-body { color: #7a7a7a; font-size: 13px; line-height: 1.7; margin-top: 16px; }
+  .impressum .imp-body strong { color: #a5a5a5; font-weight: 600; }
+  .impressum .imp-body a { color: #a5a5a5; }
+
+  /* ---------- FX LAYERS ---------- */
+  /* Background layers sit behind content (negative z) so the hero video's
+     screen-blend can reach the real page backdrop and drop its black box. */
+  header, section, footer { position: relative; }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    pointer-events: none;
+    background:
+      radial-gradient(900px 620px at 50% 0%, rgba(96,96,130,0.20), transparent 55%),
+      radial-gradient(760px 520px at 82% 104%, rgba(90,60,110,0.14), transparent 60%);
+  }
+
+  #fx {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  /* ---------- HERO GLOW (white) ---------- */
+  .hero h1 {
+    filter:
+      drop-shadow(0 0 4px rgba(255,255,255,0.90))
+      drop-shadow(0 0 22px rgba(255,255,255,0.40))
+      drop-shadow(0 0 50px rgba(255,255,255,0.20));
+    animation: breathe 5s ease-in-out infinite;
+  }
+  @keyframes breathe {
+    0%,100% {
+      filter:
+        drop-shadow(0 0 4px rgba(255,255,255,0.85))
+        drop-shadow(0 0 18px rgba(255,255,255,0.32))
+        drop-shadow(0 0 40px rgba(255,255,255,0.16));
+    }
+    50% {
+      filter:
+        drop-shadow(0 0 5px rgba(255,255,255,1))
+        drop-shadow(0 0 30px rgba(255,255,255,0.50))
+        drop-shadow(0 0 64px rgba(255,255,255,0.26));
+    }
+  }
+  .release-cta a:not(.alt) { box-shadow: 0 0 28px rgba(255,255,255,0.22); }
+
+  /* ---------- SCROLL REVEAL ---------- */
+  .reveal { opacity: 0; transform: translateY(26px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  /* ---------- INTRO LOADER ---------- */
+  #loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+  }
+  #loader.done { opacity: 0; visibility: hidden; }
+  #loader .brand {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(42px, 13vw, 78px);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+    animation: loaderIn 1s cubic-bezier(.2,.7,.2,1) forwards;
+    text-shadow: 0 0 44px rgba(255,255,255,0.35);
+  }
+  #loader .bar {
+    width: 150px; height: 2px;
+    background: #222; border-radius: 2px; overflow: hidden;
+  }
+  #loader .bar span {
+    display: block; height: 100%; width: 38%;
+    background: #fff; border-radius: 2px;
+    box-shadow: 0 0 12px rgba(255,255,255,0.7);
+    animation: loaderBar 1.35s ease-in-out infinite;
+  }
+  @keyframes loaderIn { to { opacity: 1; transform: none; } }
+  @keyframes loaderBar { 0% { transform: translateX(-130%); } 100% { transform: translateX(400%); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .hero h1 { animation: none; }
+    #loader .brand { animation: none; opacity: 1; transform: none; }
+    #loader .bar span { animation: none; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- ===================== INTRO LOADER ===================== -->
+  <div id="loader" aria-hidden="true">
+    <div class="brand">OHRYBABY</div>
+    <div class="bar"><span></span></div>
+  </div>
+
+  <!-- ===================== FX CANVAS ===================== -->
+  <canvas id="fx" aria-hidden="true"></canvas>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <div class="hero-video">
+      <video src="crew-eye.mp4" autoplay loop muted playsinline preload="auto" aria-label="OHRYBABY Logo"></video>
+    </div>
+    <div class="hero-text">
+      <h1>OHRYBABY</h1>
+      <p class="tagline">Rapper &nbsp;·&nbsp; Artist</p>
+    </div>
+  </header>
+
+  <!-- ===================== NEW RELEASE ===================== -->
+  <section id="neu">
+    <div class="wrap reveal">
+      <span class="release-tag"><span class="dot"></span> Neu draußen</span>
+      <h2 class="release-title">Flaschengeist</h2>
+      <div class="release-cta">
+        <a href="https://open.spotify.com/intl-de/track/1MMot7GYYJu5gICq211L2I" target="_blank" rel="noopener">▶ Auf Spotify hören</a>
+        <a class="alt" href="https://music.apple.com/de/album/flaschengeist/6806223601?i=6806223603" target="_blank" rel="noopener">Apple Music</a>
+      </div>
+      <div class="shorts">
+        <div class="short">
+          <iframe src="https://www.youtube-nocookie.com/embed/ukKH4MoEPPk" title="Flaschengeist — Short 1" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+        <div class="short">
+          <iframe src="https://www.youtube-nocookie.com/embed/p4d-s93hNy4" title="Flaschengeist — Short 2" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== LINKS ===================== -->
+  <section id="listen">
+    <div class="wrap reveal">
+      <p class="section-title">Streaming &amp; Social</p>
+      <div class="links">
+
+        <a class="link" href="https://open.spotify.com/intl-de/artist/6wrdqreQMYIYfQeF8fZXT7" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.5 17.32c-.22.36-.68.48-1.04.26-2.86-1.74-6.46-2.14-10.7-1.18-.42.1-.82-.16-.92-.58-.1-.42.16-.82.58-.92 4.64-1.06 8.62-.6 11.82 1.36.36.22.48.68.26 1.06zm1.46-3.26c-.28.44-.86.6-1.3.32-3.28-2.02-8.28-2.6-12.16-1.42-.5.14-1.04-.14-1.18-.64-.14-.5.14-1.04.64-1.18 4.44-1.34 9.94-.7 13.7 1.62.44.26.6.86.3 1.3zm.12-3.4C15.24 8.14 8.82 7.9 5.06 9.04c-.6.18-1.24-.16-1.42-.76-.18-.6.16-1.24.76-1.42 4.32-1.3 11.4-1.06 15.9 1.62.54.32.72 1.02.4 1.56-.32.52-1.02.7-1.56.38z"/></svg></span>
+          Spotify
+          <span class="arrow">↗</span>
+        </a>
+
+        <a class="link" href="https://music.apple.com/de/album/flaschengeist/6806223601?i=6806223603" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg></span>
+          Apple Music
+          <span class="arrow">↗</span>
+        </a>
+
+        <a class="link" href="https://music.youtube.com/watch?v=mpGIMwoY0f8" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 0C5.376 0 0 5.376 0 12s5.376 12 12 12 12-5.376 12-12S18.624 0 12 0zm0 19.104c-3.924 0-7.104-3.18-7.104-7.104S8.076 4.896 12 4.896s7.104 3.18 7.104 7.104-3.18 7.104-7.104 7.104zm0-13.332c-3.432 0-6.228 2.796-6.228 6.228S8.568 18.228 12 18.228s6.228-2.796 6.228-6.228S15.432 5.772 12 5.772zM9.6 15.6V8.4l6 3.6-6 3.6z"/></svg></span>
+          YouTube Music
+          <span class="arrow">↗</span>
+        </a>
+
+        <a class="link" href="https://www.youtube.com/@ohrybaby" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg></span>
+          YouTube
+          <span class="arrow">↗</span>
+        </a>
+
+        <a class="link" href="https://www.tiktok.com/@ohrybaby" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg></span>
+          TikTok
+          <span class="arrow">↗</span>
+        </a>
+
+        <a class="link" href="https://www.instagram.com/ohrybaby" target="_blank" rel="noopener">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.72 3.72 0 01-1.38-.9 3.72 3.72 0 01-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16zm0 3.68A6.16 6.16 0 1018.16 12 6.16 6.16 0 0012 5.84zm0 10.16A4 4 0 1116 12a4 4 0 01-4 4zm6.4-10.4a1.44 1.44 0 11-1.44-1.44 1.44 1.44 0 011.44 1.44z"/></svg></span>
+          Instagram
+          <span class="arrow">↗</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== VIDEOS ===================== -->
+  <section id="videos">
+    <div class="wrap reveal">
+      <p class="section-title">Videos</p>
+      <div class="videos">
+
+        <div class="video">
+          <iframe src="https://www.youtube-nocookie.com/embed/D09KWCaoLLE" title="OHRYBABY — Video 1" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="video">
+          <iframe src="https://www.youtube-nocookie.com/embed/ODtuT7CGfwE" title="OHRYBABY — Video 2" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+        <div class="video">
+          <iframe src="https://www.youtube-nocookie.com/embed/O1XWMOYBYpc" title="OHRYBABY — Video 3" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section id="about">
+    <div class="wrap bio">
+      <div class="bio-head">
+        <p class="section-title">Bio</p>
+        <div class="lang-toggle" role="group" aria-label="Sprache / Language">
+          <button type="button" class="lang-btn active" data-lang="de" aria-pressed="true">DE</button>
+          <button type="button" class="lang-btn" data-lang="en" aria-pressed="false">EN</button>
+        </div>
+      </div>
+
+      <div class="bio-stage">
+        <div class="bio-lang" data-lang="de">
+          <p class="lead">OHRY wuchs in Deutschland auf, geboren in eine gemischte Familie – die Mutter Bauchtänzerin, der Vater Sänger und Musiker, beide zum Studieren nach Deutschland gekommen.</p>
+          <p>Sie landeten in einem rauen Viertel, die Familie lebte in Armut. Das Umfeld und die fehlenden Chancen zogen ihn früh zu den falschen Leuten und auf die falsche Bahn.</p>
+          <p>Doch Musik war überall. Ständig lief etwas im Haus, und OHRY sog jede Note auf – von Klassik über <strong>Freddie Mercury</strong>, <strong>Jimi Hendrix</strong> und <strong>James Brown</strong> bis <strong>Bob Marley</strong> und <strong>2Pac</strong>. Art-Rock, Art-Pop und Hip-Hop, dazu eine fundierte Opernausbildung: heraus kommt ein wirklich einzigartiger Künstler, der all diese Elemente zum Klingen bringt.</p>
+          <p>Mit 12 begann er seine klassische Ausbildung zum Tenor bei der international gefeierten Opernsängerin <strong>Bonita Hyman</strong> – und hat seither nie aufgehört.</p>
+          <p>Der Weg war alles andere als glatt: mit 17 von der Schule geflogen, danach von Schule zu Schule – bis er kurz vor dem Abschluss für einen Schauspiel-Gig alles hinwarf. Als der platzte, stand er auf der Straße und schlief auf Friedhöfen in Frankfurt.</p>
+          <p>OHRY will Menschen bewegen. Alles, was er durchgemacht hat, fließt in seine Musik – und auf der Bühne lässt er alles da. Es geht um Authentizität. Er will Herzen berühren.</p>
+          <p class="outro">OHRY ist jetzt auf einer neuen Reise.</p>
+        </div>
+
+        <div class="bio-lang" data-lang="en" hidden>
+          <p class="lead">OHRY grew up in Germany, born to a mixed-race family — his mother a belly dancer, his father a singer and musician, both of whom had moved to the country to study.</p>
+          <p>They settled in a rough neighbourhood, and the family lived in poverty. The people around him and the lack of opportunity pulled him toward the wrong crowd and down the wrong path.</p>
+          <p>But music was everywhere. Tunes played constantly around the house, and OHRY absorbed every note — from classical to <strong>Freddie Mercury</strong>, <strong>Jimi Hendrix</strong> and <strong>James Brown</strong> through to <strong>Bob Marley</strong> and <strong>2Pac</strong>. Art-rock, art-pop and hip-hop, laced with high-end operatic training: the result is a genuinely singular artist who makes every element sing.</p>
+          <p>At 12 he began training as a classical tenor under internationally acclaimed opera singer <strong>Bonita Hyman</strong> — and he hasn't stopped since.</p>
+          <p>The road was anything but smooth: kicked out of school at 17, he bounced between schools before walking away from his finals for an acting gig. When it fell apart, he ended up homeless, sleeping in churchyards in Frankfurt.</p>
+          <p>OHRY is here to move people. Everything he has lived feeds the music, and he leaves it all on stage. Authenticity is the whole point — he wants to touch hearts.</p>
+          <p class="outro">OHRY is now on a new journey.</p>
+        </div>
+      </div>
+
+      <ul class="facts reveal">
+        <li><span class="num">8.000+</span><span class="lbl i18n" data-de="Live-Publikum" data-en="Live audience">Live-Publikum</span></li>
+        <li><span class="num">#17</span><span class="lbl i18n" data-de="iTunes Reggae-Charts (EP „X“)" data-en="iTunes Reggae charts (EP “X”)">iTunes Reggae-Charts (EP „X“)</span></li>
+        <li><span class="num">Lollapalooza</span><span class="lbl">Berlin</span></li>
+        <li><span class="num">The Kru</span><span class="lbl i18n" data-de="Band &amp; Live" data-en="Band &amp; live">Band &amp; Live</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer>
+    <div class="name">OHRYBABY</div>
+    <p class="contact">Booking &amp; Kontakt:<br /><a href="mailto:Bookingjohnohry@gmail.com">Bookingjohnohry@gmail.com</a><br /><a href="mailto:Can_kantekin@hotmail.de">Can_kantekin@hotmail.de</a></p>
+    <p class="copy">© 2026 OHRYBABY — All rights reserved.</p>
+
+    <details class="impressum">
+      <summary>Impressum</summary>
+      <div class="imp-body">
+        <p>Angaben gemäß § 5 DDG</p>
+        <p>
+          <strong>Orhan Can Kantekin</strong><br />
+          Netanyastraße 2<br />
+          35394 Gießen
+        </p>
+        <p>
+          <strong>Kontakt</strong><br />
+          E-Mail: <a href="mailto:Bookingjohnohry@gmail.com">Bookingjohnohry@gmail.com</a><br />
+          E-Mail: <a href="mailto:Can_kantekin@hotmail.de">Can_kantekin@hotmail.de</a>
+        </p>
+        <p>Verantwortlich für den Inhalt nach § 18 Abs. 2 MStV: Orhan Can Kantekin (Anschrift wie oben).</p>
+      </div>
+    </details>
+  </footer>
+
+  <script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ----- Intro loader ----- */
+    var loaderStart = Date.now();
+    function hideLoader() {
+      var l = document.getElementById('loader');
+      if (l) l.classList.add('done');
+    }
+    window.addEventListener('load', function () {
+      var elapsed = Date.now() - loaderStart;
+      setTimeout(hideLoader, Math.max(0, 1400 - elapsed));
+    });
+    setTimeout(hideLoader, 4000); /* safety fallback */
+
+    /* ----- Scroll reveal ----- */
+    var revs = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window && !reduce) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.12 });
+      revs.forEach(function (el) { io.observe(el); });
+    } else {
+      revs.forEach(function (el) { el.classList.add('in'); });
+    }
+
+    /* ----- Particle field ----- */
+    var canvas = document.getElementById('fx');
+    if (!canvas || reduce) return;
+    var ctx = canvas.getContext('2d');
+    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    var W = 0, H = 0, parts = [];
+
+    function make() {
+      return {
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight,
+        r: Math.random() * 1.8 + 0.4,
+        vx: (Math.random() - 0.5) * 0.14,
+        vy: -(Math.random() * 0.34 + 0.07),
+        a: Math.random() * 0.5 + 0.14
+      };
+    }
+    function resize() {
+      W = window.innerWidth; H = window.innerHeight;
+      canvas.style.width = W + 'px'; canvas.style.height = H + 'px';
+      canvas.width = W * dpr; canvas.height = H * dpr;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      var target = Math.round(Math.min(95, (W * H) / 15000));
+      parts = [];
+      for (var i = 0; i < target; i++) parts.push(make());
+    }
+    function tick() {
+      ctx.clearRect(0, 0, W, H);
+      ctx.shadowColor = 'rgba(255,255,255,0.75)';
+      ctx.shadowBlur = 8;
+      for (var i = 0; i < parts.length; i++) {
+        var p = parts[i];
+        p.x += p.vx; p.y += p.vy;
+        if (p.y < -12) { p.y = H + 12; p.x = Math.random() * W; }
+        if (p.x < -12) p.x = W + 12; else if (p.x > W + 12) p.x = -12;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,' + p.a + ')';
+        ctx.fill();
+      }
+      requestAnimationFrame(tick);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+    tick();
+  })();
+  </script>
+
+  <script>
+  (function () {
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    /* ---------- Bio: ghost cross-fade between DE / EN ---------- */
+    var stage = document.querySelector('.bio-stage');
+    if (stage) {
+      var btns = Array.prototype.slice.call(document.querySelectorAll('.lang-btn'));
+      var langs = Array.prototype.slice.call(document.querySelectorAll('.bio-lang'));
+      var i18n = Array.prototype.slice.call(document.querySelectorAll('.i18n'));
+
+      var byLang = function (l) {
+        return langs.filter(function (el) { return el.getAttribute('data-lang') === l; })[0];
+      };
+      var setChrome = function (lang) {
+        btns.forEach(function (b) {
+          var a = b.getAttribute('data-lang') === lang;
+          b.classList.toggle('active', a);
+          b.setAttribute('aria-pressed', a ? 'true' : 'false');
+        });
+        i18n.forEach(function (el) { var v = el.getAttribute('data-' + lang); if (v != null) el.textContent = v; });
+      };
+
+      var switchTo = function (lang) {
+        var incoming = byLang(lang);
+        if (!incoming) return;
+        var outgoing = langs.filter(function (el) { return el !== incoming && !el.hidden; })[0];
+        setChrome(lang);
+
+        if (reduce) {
+          langs.forEach(function (el) { el.hidden = el !== incoming; el.classList.remove('enter', 'ghost'); });
+          return;
+        }
+
+        if (outgoing && outgoing !== incoming) {
+          stage.style.minHeight = Math.max(incoming.offsetHeight, outgoing.offsetHeight) + 'px';
+          outgoing.classList.add('ghost');
+          (function (og) {
+            setTimeout(function () { og.hidden = true; og.classList.remove('ghost'); stage.style.minHeight = ''; }, 600);
+          })(outgoing);
+        }
+
+        incoming.hidden = false;
+        incoming.classList.remove('ghost');
+        incoming.classList.add('enter');
+        void incoming.offsetWidth;
+        incoming.classList.remove('enter');
+      };
+
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () { switchTo(b.getAttribute('data-lang')); });
+      });
+
+      langs.forEach(function (el) { el.hidden = el.getAttribute('data-lang') !== 'de'; el.classList.remove('ghost'); });
+      setChrome('de');
+      if (!reduce) {
+        var de = byLang('de');
+        de.classList.add('enter');
+        var about = document.getElementById('about');
+        if ('IntersectionObserver' in window && about) {
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) { if (e.isIntersecting) { de.classList.remove('enter'); io.unobserve(e.target); } });
+          }, { threshold: 0.2 });
+          io.observe(about);
+        } else {
+          de.classList.remove('enter');
+        }
+      }
+    }
+
+    /* ---------- Count-up stats ---------- */
+    var nums = Array.prototype.slice.call(document.querySelectorAll('.facts .num'));
+    var parseNum = function (el) {
+      var m = el.textContent.trim().match(/^(\D*)([\d.,]+)(\D*)$/);
+      if (!m) return null;
+      var val = parseInt(m[2].replace(/[.,]/g, ''), 10);
+      if (isNaN(val)) return null;
+      return { prefix: m[1], value: val, suffix: m[3] };
+    };
+    var runCount = function (el, info) {
+      var dur = 1700, start = null;
+      var ease = function (t) { return 1 - Math.pow(1 - t, 3); };
+      var frame = function (ts) {
+        if (start === null) start = ts;
+        var p = Math.min(1, (ts - start) / dur);
+        var cur = Math.round(info.value * ease(p));
+        el.textContent = info.prefix + cur.toLocaleString('de-DE') + info.suffix;
+        if (p < 1) requestAnimationFrame(frame);
+      };
+      requestAnimationFrame(frame);
+    };
+    var counters = [];
+    nums.forEach(function (el) {
+      var info = parseNum(el);
+      if (info) { counters.push({ el: el, info: info }); if (!reduce) el.textContent = info.prefix + '0' + info.suffix; }
+    });
+    if (counters.length && !reduce && 'IntersectionObserver' in window) {
+      var factsEl = document.querySelector('.facts');
+      var io2 = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { counters.forEach(function (c) { runCount(c.el, c.info); }); io2.unobserve(e.target); }
+        });
+      }, { threshold: 0.3 });
+      io2.observe(factsEl);
+    }
+  })();
+  </script>
+
+</body>
+</html>
